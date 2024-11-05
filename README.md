@@ -1,5 +1,5 @@
 # GSC STT(Speech to text)
-TEST View
+<https://hyojungson.github.io/speechToText/>
 
 ## SpeechRecognition
 ### Browser compatibility
