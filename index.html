@@ -1,0 +1,71 @@
+https://mizzo-dev.tistory.com/entry/SpeechRecognition-WebChrome-%EC%9D%8C%EC%84%B1-%EC%9D%B8%EC%8B%9D
+﻿<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Speech color changer</title>
+  </head>
+
+  <body>
+    <h1>Speech color changer</h1>
+	
+	<button id="startButton">Start Voice Input</button>
+    <p class="hints"></p>
+    <div>
+      <p class="output"><em>==NO==</em></p>
+    </div>
+	
+	<script>
+		const startButton = document.getElementById('startButton');
+		var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+		// var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
+		var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+
+		var colors = [ 'aqua' , 'azure' , 'beige', 'bisque', 'black', 'blue', 'brown', 'chocolate', 'coral', 'crimson', 'cyan', 'fuchsia', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'indigo', 'ivory', 'khaki', 'lavender', 'lime', 'linen', 'magenta', 'maroon', 'moccasin', 'navy', 'olive', 'orange', 'orchid', 'peru', 'pink', 'plum', 'purple', 'red', 'salmon', 'sienna', 'silver', 'snow', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'white', 'yellow'];
+
+		var recognition = new SpeechRecognition();
+
+		recognition.continuous = false;
+		recognition.lang = 'ko-KR';
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 1;
+		
+		let diagnostic = null;
+		let makeNewTextContent = function() {
+			if(diagnostic === null){
+				diagnostic = document.createElement('p');
+				document.querySelector('.output').appendChild(diagnostic);
+			}
+		};
+
+		startButton.addEventListener('click', () => {
+			recognition.start();
+			makeNewTextContent();
+			 console.log('Ready to receive a color command.');
+		});
+
+		recognition.onresult = function(event) {
+		  var color = event.results[0][0].transcript;
+		  diagnostic.textContent = 'Result received: ' + color + '.';
+		 
+		  console.log('Confidence: ' + event.results[0][0].confidence);
+		}
+
+		recognition.onspeechend = function() {
+		  recognition.stop();
+		}
+
+		<!-- recognition.onnomatch = function(event) { -->
+		  <!-- diagnostic.textContent = "I didn't recognise that color."; -->
+		<!-- } -->
+
+		recognition.onerror = function(event) {
+		  diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
+		}
+	</script>
+  </body>
+</html>
+
