@@ -145,7 +145,7 @@
       });
 
       recognition.onresult = function (event) {
-        diagnostic.textContent = event.results[0][0].transcript + '.';
+        diagnostic.textContent = event.results[0][0].transcript;
       };
 
       recognition.onerror = function (event) {
