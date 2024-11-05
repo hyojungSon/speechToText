@@ -39,6 +39,14 @@
 			background-color: #dddddd;
 			min-height: 200px;
 		}
+		
+		#info{
+			cursor: pointer;
+		}
+		
+		.hidden{
+			display: none;
+		}
 	</style>
 	</head>
 
@@ -51,7 +59,10 @@
 		
 		<div class="output"></div>
 		
-		<div>
+		<br/>
+		<br/>
+		<div id="info"> Developer</div>
+		<div id="infoDiv" class="hidden">
 			<ul>
 			 <strong>Browser compatibility</strong>
 			  <li>Chrome</li>
@@ -73,6 +84,9 @@
 	  
 	<script>
 			let isRecording = false;
+			let isHiddenDiv = true;
+			const info = document.getElementById('info');
+			const infoDiv = document.getElementById('infoDiv');
 			const startButton = document.getElementById('startButton');
 			const [lblBtn] = document.getElementsByClassName('lblBtn');
 
@@ -123,6 +137,11 @@
 			recognition.onerror = function(event) {
 				diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
 			}
+			
+			info.addEventListener('click', () => {
+				infoDiv.className = isHiddenDiv ? "" : "hidden" ;
+				isHiddenDiv = !isHiddenDiv;
+			});
 		</script>
 	</body>
 </html>
